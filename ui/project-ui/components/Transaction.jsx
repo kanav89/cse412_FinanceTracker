@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 
 function Transaction({ userId }) {
+  // all the states
   const [transactions, setTransactions] = useState([])
   const [accounts, setAccounts] = useState([])
   const [categories, setCategories] = useState([])
@@ -18,9 +19,10 @@ function Transaction({ userId }) {
     fetchData()
   }, [userId])
 
+  // fetch data from the backend
   const fetchData = async () => {
     try {
-      const [transRes, accountsRes, categoriesRes] = await Promise.all([
+      const [transRes,accountsRes,categoriesRes] = await Promise.all([
         fetch(`http://localhost:5000/transactions/${userId}`),
         fetch(`http://localhost:5000/accounts/${userId}`),
         fetch('http://localhost:5000/categories')
@@ -38,10 +40,11 @@ function Transaction({ userId }) {
     }
   }
 
+  // handle add transaction
   const handleAddTransaction = async (e) => {
     e.preventDefault()
     try {
-      const response = await fetch('http://localhost:5000/transactions', {
+      const response = await fetch('http://localhost:5000/transactions',{
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -66,6 +69,7 @@ function Transaction({ userId }) {
     }
   }
 
+  // leeting the user to delete the transaction
   const deleteTransaction = async (transactionId) => {
     if (window.confirm('Are you sure you want to delete this transaction?')) {
       try {
@@ -81,10 +85,11 @@ function Transaction({ userId }) {
     }
   }
 
+  // loading state
   if (loading) {
     return <div>Loading transactions...</div>
   }
-
+// ui
   return (
     <div>
       <div className="section-header">
@@ -153,9 +158,9 @@ function Transaction({ userId }) {
             <label>Description (optional)</label>
             <input
               type="text"
-              placeholder="Description (optional)"
+              placeholder="Description(optional)"
               value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              onChange={(e) =>setFormData({ ...formData, description: e.target.value })}
             />
           </div>
           <button
@@ -166,11 +171,12 @@ function Transaction({ userId }) {
           </button>
         </form>
       )}
-
-      {transactions.length === 0 ? (
+{/* checking if the transactions are empty */}
+      {transactions.length===0 ?(
         <p className="empty-state">No transactions found. Add your first transaction above.</p>
       ) : (
         <div>
+          {/* mapping the transactions */}
           {transactions.map((transaction) => {
             const account = accounts.find(a => a[0] === transaction[2])
             const category = categories.find(c => c[0] === transaction[3])
@@ -185,7 +191,7 @@ function Transaction({ userId }) {
                       {category ? category[1] : 'Unknown'}
                     </h3>
                     <p className="item-subtitle">
-                      {account ? account[2] :'Unknown Account'} • {new Date(transaction[4]).toLocaleDateString()}
+                      {account ? account[2]:'Unknown Account'}•{new Date(transaction[4]).toLocaleDateString()}
                     </p>
                     {transaction[6] && (
                       <p className="item-subtitle" style={{ marginTop: '0.25rem' }}>
@@ -200,7 +206,7 @@ function Transaction({ userId }) {
                     <button
                       onClick={() => deleteTransaction(transaction[0])}
                       className="btn-small btn-danger"
-                      style={{ marginTop: '0.5rem' }}
+                      style={{ marginTop:'0.5rem' }}
                     >
                       Delete
                     </button>

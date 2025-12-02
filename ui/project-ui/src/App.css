@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg,#10b981 0%,#059669 100%);
 }
 
 .login-card {
@@ -31,21 +31,6 @@
   padding: 0.75rem;
   border-radius: 8px;
   margin-bottom: 1rem;
-  font-size: 0.9rem;
-}
-
-.toggle-button {
-  margin-top: 1.5rem;
-  background: transparent;
-  border: none;
-  color: #10b981;
-  font-weight: 500;
-}
-
-.toggle-button:hover {
-  color: #059669;
-  background: transparent;
-  text-decoration: underline;
 }
 
 .dashboard-container {
@@ -73,46 +58,13 @@
   padding-bottom: 0;
 }
 
-.tab-button {
-  padding: 0.875rem 1.75rem;
-  border: none;
-  background: transparent;
-  color: #6b7280;
-  cursor: pointer;
-  font-weight: 500;
-  border-bottom: 3px solid transparent;
-  transition: all 0.2s ease;
-  border-radius: 0;
-  margin-bottom: -2px;
-}
 
-.tab-button:hover {
-  color: #10b981;
-  background: #f0fdf4;
-}
-
-.tab-button.active {
-  color: #10b981;
-  border-bottom-color: #10b981;
-  background: transparent;
-}
-
-.content-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
 
 .section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.75rem;
-}
-
-.section-header h2 {
-  margin: 0;
 }
 
 .form-card {
@@ -141,10 +93,6 @@
   transition: all 0.2s ease;
 }
 
-.item-card:hover {
-  border-color: #10b981;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
-}
 
 .item-header {
   display: flex;
@@ -205,14 +153,14 @@ label {
 }
 
 .summary-card {
-  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  background: #10b981;
   padding: 1.5rem;
   border-radius: 12px;
   border: 1.5px solid #10b981;
 }
 
 .summary-label {
-  color: #6b7280;
+  color: white;
   font-size: 0.9rem;
   margin: 0 0 0.5rem 0;
 }
@@ -220,7 +168,7 @@ label {
 .summary-value {
   font-size: 2rem;
   font-weight: 700;
-  color: #10b981;
+  color: white;
   margin: 0;
 }
 
@@ -242,9 +190,4 @@ label {
   cursor: pointer;
   font-weight: 500;
   transition: all 0.2s ease;
-}
-
-.btn-secondary:hover {
-  background: #4b5563;
-  transform: translateY(-1px);
 }

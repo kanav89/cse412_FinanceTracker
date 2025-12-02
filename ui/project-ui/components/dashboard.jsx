@@ -4,13 +4,16 @@ import Transaction from './Transaction'
 import Budget from './Budget'
 
 function DashboardSummary({ userId, userName }) {
-  const [summary, setSummary] = useState(null)
-  const [loading, setLoading] = useState(true)
+  // defining the states
+  const [summary, setSummary] =useState(null)
+  const [loading, setLoading] =useState(true)
 
+  // fetch summary from the backend
   useEffect(() => {
     fetchSummary()
   }, [userId])
 
+  // fetch summary from the backend
   const fetchSummary = async () => {
     try {
       const response = await fetch(`http://localhost:5000/dashboard/${userId}`)
@@ -23,6 +26,7 @@ function DashboardSummary({ userId, userName }) {
     }
   }
 
+  // loading state
   if (loading) return <div>Loading dashboard...</div>
   if (!summary) return <div>Unable to load dashboard</div>
 
@@ -49,9 +53,11 @@ function DashboardSummary({ userId, userName }) {
         </div>
       </div>
 
-      {summary.recent_transactions && summary.recent_transactions.length > 0 && (
-        <div style={{ marginTop: '2rem' }}>
-          <h3 style={{ marginBottom: '1rem' }}>Recent Transactions</h3>
+      {/* checking if the recent transactions are not empty */}
+      {summary.recent_transactions && summary.recent_transactions.length>0&& (
+        <div style={{ marginTop:'2rem' }}>
+          <h3 style={{ marginBottom:'1rem' }}>Recent Transactions</h3>
+          {/* mapping the recent transactions */}
           {summary.recent_transactions.map((transaction) => (
             <div key={transaction[0]} className="item-card">
               <div className="item-header">
@@ -61,12 +67,12 @@ function DashboardSummary({ userId, userName }) {
                     {transaction[7]} • {new Date(transaction[4]).toLocaleDateString()}
                   </p>
                   {transaction[6] && (
-                    <p className="item-subtitle" style={{ marginTop: '0.25rem' }}>
+                    <p className="item-subtitle" style={{marginTop:'0.25rem' }}>
                       {transaction[6]}
                     </p>
                   )}
                 </div>
-                <div style={{ textAlign: 'right' }}>
+                <div style={{textAlign:'right'}}>
                   <p className="item-amount">${parseFloat(transaction[5]).toFixed(2)}</p>
                 </div>
               </div>
@@ -78,10 +84,13 @@ function DashboardSummary({ userId, userName }) {
   )
 }
 
+// dashboard component
 function Dashboard() {
-  const [user, setUser] = useState(null)
-  const [currVeiw, setcurrVeiw] = useState('dashboard')
+  // defining the states
+  const [user, setUser]=useState(null)
+  const [currVeiw, setcurrVeiw]=useState('dashboard')
 
+  // fetching user data from our bakend
   useEffect(() => {
     const userData = localStorage.getItem('user')
     if (userData) {
@@ -90,10 +99,9 @@ function Dashboard() {
       window.location.href = '/'
     }
   }, [])
-
-  const logoutfunction = () => {
+  const logoutfunction =()=>{
     localStorage.removeItem('user')
-    window.location.href = '/'
+    window.location.href='/'
   }
 
   if (!user) return <div>Loading...</div>
@@ -109,16 +117,16 @@ function Dashboard() {
         {['dashboard','account','transaction','budget'].map(view => (
           <button
             key={view}
-            className={`tab-button ${currVeiw === view ? 'active' : ''}`}
-            onClick={() => setcurrVeiw(view)}
-          >
+            className={`tab-button ${currVeiw ===view?'active':''}`}
+            onClick={() => setcurrVeiw(view)}>
             {view.charAt(0).toUpperCase()+view.slice(1)}
           </button>
         ))}
       </div>
 
+{/* displaying the content based on the view */}
       <div className="content-card">
-        {currVeiw === 'dashboard' && <DashboardSummary userId={user[0]} userName={`${user[1]} ${user[2]}`} />}
+        {currVeiw === 'dashboard'&& <DashboardSummary userId={user[0]} userName={`${user[1]} ${user[2]}`} />}
         {currVeiw==='account' && <Account userId={user[0]} />}
         {currVeiw==='transaction' && <Transaction userId={user[0]} />}
         {currVeiw === 'budget' && <Budget userId={user[0]} />}

@@ -17,10 +17,8 @@ function Account({ userId }) {
       const response = await fetch(`http://localhost:5000/accounts/${userId}`)
       const data = await response.json()
       setAccounts(data)
-
     } catch (error) {
-      console.error('Error fetching accounts:', error)
-
+      console.error('Error', error)
     }
   }
 
@@ -213,11 +211,11 @@ function Account({ userId }) {
                     <p className="item-amount">
                       ${parseFloat(account[4]).toFixed(2)}
                     </p>
-                    <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem', justifyContent: 'flex-end' }}>
-                      <button onClick={() => startEdit(account)} className="btn-small btn-primary">
+                    <div style={{ display: 'flex',gap:'0.5rem',marginTop:'0.5rem',justifyContent:'flex-end'}}>
+                      <button onClick={()=>startEdit(account)} className="btn-small btn-primary">
                         Edit
                       </button>
-                      <button onClick={() => deleteAccount(account[0])} className="btn-small btn-danger">
+                      <button onClick={()=>deleteAccount(account[0])} className="btn-small btn-danger">
                         Delete
                       </button>
                     </div>

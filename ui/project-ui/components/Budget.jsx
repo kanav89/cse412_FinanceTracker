@@ -1,22 +1,28 @@
 import { useState, useEffect } from 'react'
 
 function Budget({ userId }) {
+  // defining the states
   const [budgets, setBudgets] = useState([])
   const [categories, setCategories] = useState([])
+
   const [loading, setLoading] = useState(true)
-  const [showAddForm, setShowAddForm] = useState(false)
-  const [editingId, setEditingId] = useState(null)
-  const [formData, setFormData] = useState({
+  const [addf, setaddf] = useState(false)
+  const [eId, seteId] = useState(null)
+  const [fDat, setfDat] = useState({
+
+
     category_id: '',
     amount_limit: '',
     budget_month: new Date().getMonth() + 1,
     budget_year: new Date().getFullYear()
   })
 
+  // fetching data from the backend
   useEffect(() => {
     fetchData()
   }, [userId])
 
+  // fetching data from the backend
   const fetchData = async () => {
     try {
       const [budgetsRes, categoriesRes] = await Promise.all([
@@ -34,6 +40,7 @@ function Budget({ userId }) {
     }
   }
 
+  // handling the add budget
   const handleAddBudget = async (e) => {
     e.preventDefault()
     try {
@@ -41,21 +48,22 @@ function Budget({ userId }) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          // sending the data to the backend
           user_id: userId,
-          category_id: formData.category_id,
-          amount_limit: parseFloat(formData.amount_limit),
-          budget_month: parseInt(formData.budget_month),
-          budget_year: parseInt(formData.budget_year)
+          category_id: fDat.category_id,
+          amount_limit: parseFloat(fDat.amount_limit),
+          budget_month: parseInt(fDat.budget_month),
+          budget_year: parseInt(fDat.budget_year)
         })
       })
       if (response.ok) {
-        setFormData({
+        setfDat({
           category_id: '',
           amount_limit: '',
           budget_month: new Date().getMonth() + 1,
           budget_year: new Date().getFullYear()
         })
-        setShowAddForm(false)
+        setaddf(false)
         fetchData()
       }
     } catch (error) {
@@ -63,9 +71,10 @@ function Budget({ userId }) {
     }
   }
 
+  // handling editing of budget
   const startEdit = (budget) => {
-    setEditingId(budget[0])
-    setFormData({
+    seteId(budget[0])
+    setfDat({
       category_id: budget[2].toString(),
       amount_limit: budget[3].toString(),
       budget_month: budget[4],
@@ -73,21 +82,22 @@ function Budget({ userId }) {
     })
   }
 
+  // handling updating of budget
   const handleUpdateBudget = async (budgetId) => {
     try {
       const response = await fetch(`http://localhost:5000/budgets/${budgetId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          category_id: formData.category_id,
-          amount_limit: parseFloat(formData.amount_limit),
-          budget_month: parseInt(formData.budget_month),
-          budget_year: parseInt(formData.budget_year)
+          category_id: fDat.category_id,
+          amount_limit: parseFloat(fDat.amount_limit),
+          budget_month: parseInt(fDat.budget_month),
+          budget_year: parseInt(fDat.budget_year)
         })
       })
       if (response.ok) {
-        setEditingId(null)
-        setFormData({
+        seteId(null)
+        setfDat({
           category_id: '',
           amount_limit: '',
           budget_month: new Date().getMonth() + 1,
@@ -100,6 +110,7 @@ function Budget({ userId }) {
     }
   }
 
+  // handling deleting of budget
   const deleteBudget = async (budgetId) => {
     if (window.confirm('Are you sure you want to delete this budget?')) {
       try {
@@ -115,9 +126,10 @@ function Budget({ userId }) {
     }
   }
 
+  // handling canceling of edit
   const cancelEdit = () => {
-    setEditingId(null)
-    setFormData({
+    seteId(null)
+    setfDat({
       category_id: '',
       amount_limit: '',
       budget_month: new Date().getMonth() + 1,
@@ -125,29 +137,30 @@ function Budget({ userId }) {
     })
   }
 
+  // loading state
   if (loading) {
     return <div>Loading budgets...</div>
   }
-
+  // ui
   return (
     <div>
       <div className="section-header">
         <h2>My Budgets</h2>
         <button
-          onClick={() => setShowAddForm(!showAddForm)}
+          onClick={() => setaddf(!addf)}
           className="btn-primary"
         >
-          {showAddForm ? 'Cancel' : '+ Add Budget'}
+          {addf ? 'Cancel' : '+ Add Budget'}
         </button>
       </div>
 
-      {showAddForm && (
+      {addf && (
         <form onSubmit={handleAddBudget} className="form-card">
           <div className="form-group">
             <label>Category</label>
             <select
-              value={formData.category_id}
-              onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}
+              value={fDat.category_id}
+              onChange={(e) => setfDat({ ...fDat, category_id: e.target.value })}
               required
             >
               <option value="">Select Category</option>
@@ -163,8 +176,8 @@ function Budget({ userId }) {
             <input
               type="number"
               placeholder="Amount Limit"
-              value={formData.amount_limit}
-              onChange={(e) => setFormData({ ...formData, amount_limit: e.target.value })}
+              value={fDat.amount_limit}
+              onChange={(e) => setfDat({ ...fDat, amount_limit: e.target.value })}
               step="0.01"
               required
             />
@@ -176,8 +189,8 @@ function Budget({ userId }) {
                 type="number"
                 min="1"
                 max="12"
-                value={formData.budget_month}
-                onChange={(e) => setFormData({ ...formData, budget_month: e.target.value })}
+                value={fDat.budget_month}
+                onChange={(e) => setfDat({ ...fDat, budget_month: e.target.value })}
                 required
               />
             </div>
@@ -187,8 +200,8 @@ function Budget({ userId }) {
                 type="number"
                 min="2020"
                 max="2100"
-                value={formData.budget_year}
-                onChange={(e) => setFormData({ ...formData, budget_year: e.target.value })}
+                value={fDat.budget_year}
+                onChange={(e) => setfDat({ ...fDat, budget_year: e.target.value })}
                 required
               />
             </div>
@@ -207,23 +220,23 @@ function Budget({ userId }) {
       ) : (
         <div>
           {budgets.map((budget) => {
-            const category = categories.find(c => c[0] === budget[2])
-            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+            const category = categories.find(c =>c[0]===budget[2])
+            const monthss = ['January', 'February','March', 'April','May', 'June', 'July', 'August', 'September', 'October','November','December']
             return (
               <div
                 key={budget[0]}
                 className="item-card"
               >
-                {editingId === budget[0] ? (
+                {eId === budget[0] ? (
                   <div className="edit-form">
                     <div className="form-group">
                       <label>Category</label>
                       <select
-                        value={formData.category_id}
-                        onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}
+                        value={fDat.category_id}
+                        onChange={(e) => setfDat({ ...fDat, category_id: e.target.value })}
                       >
                         <option value="">Select Category</option>
-                        {categories.map((cat) => (
+                        {categories.map((cat)=>(
                           <option key={cat[0]} value={cat[0]}>
                             {cat[1]} ({cat[2]})
                           </option>
@@ -234,8 +247,8 @@ function Budget({ userId }) {
                       <label>Amount Limit</label>
                       <input
                         type="number"
-                        value={formData.amount_limit}
-                        onChange={(e) => setFormData({ ...formData, amount_limit: e.target.value })}
+                        value={fDat.amount_limit}
+                        onChange={(e) => setfDat({ ...fDat, amount_limit: e.target.value })}
                         step="0.01"
                       />
                     </div>
@@ -246,8 +259,8 @@ function Budget({ userId }) {
                           type="number"
                           min="1"
                           max="12"
-                          value={formData.budget_month}
-                          onChange={(e) => setFormData({ ...formData, budget_month: e.target.value })}
+                          value={fDat.budget_month}
+                          onChange={(e) => setfDat({ ...fDat, budget_month: e.target.value })}
                         />
                       </div>
                       <div className="form-group">
@@ -256,13 +269,13 @@ function Budget({ userId }) {
                           type="number"
                           min="2020"
                           max="2100"
-                          value={formData.budget_year}
-                          onChange={(e) => setFormData({ ...formData, budget_year: e.target.value })}
+                          value={fDat.budget_year}
+                          onChange={(e) => setfDat({ ...fDat, budget_year: e.target.value })}
                         />
                       </div>
                     </div>
-                    <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
-                      <button onClick={() => handleUpdateBudget(budget[0])} className="btn-primary">
+                    <div style={{ display:'flex',gap:'0.5rem',marginTop: '1rem' }}>
+                      <button onClick={() =>handleUpdateBudget(budget[0])} className="btn-primary">
                         Save
                       </button>
                       <button onClick={cancelEdit} className="btn-secondary">
@@ -274,10 +287,10 @@ function Budget({ userId }) {
                   <div className="item-header">
                     <div>
                       <h3 className="item-title">
-                        {category ? category[1] : 'Unknown Category'}
+                        {category ?category[1] :'Unknown Category'}
                       </h3>
                       <p className="item-subtitle">
-                        {monthNames[budget[4] - 1]} {budget[5]}
+                        {monthss[budget[4] - 1]} {budget[5]}
                       </p>
                     </div>
                     <div style={{ textAlign:'right'}}>
@@ -285,8 +298,8 @@ function Budget({ userId }) {
                         ${parseFloat(budget[3]).toFixed(2)}
                       </p>
                       <p className="item-label">Limit</p>
-                      <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem', justifyContent: 'flex-end' }}>
-                        <button onClick={() => startEdit(budget)} className="btn-small btn-primary">
+                      <div style={{ display:'flex',gap:'0.5rem',marginTop:'0.5rem',justifyContent:'flex-end' }}>
+                        <button onClick={() =>startEdit(budget)} className="btn-small btn-primary">
                           Edit
                         </button>
                         <button onClick={() => deleteBudget(budget[0])} className="btn-small btn-danger">

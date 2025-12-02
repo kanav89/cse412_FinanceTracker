@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 
 function LoginPage() {
+  // defining the states
     const [isLogin, setIsLogin] = useState(true)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -9,12 +10,14 @@ function LoginPage() {
     const [lastName, setLastName] = useState('')
     const [error, setError] = useState('')
   
+    // handle submit
     const handleSubmit = async (e) => {
       e.preventDefault()
       setError('')
   
       try {
         if (isLogin) {
+          // login request
           const response = await fetch('http://localhost:5000/login', {
             method: 'POST',
             headers: {
@@ -30,6 +33,7 @@ function LoginPage() {
             setError(data.message || 'Login failed')
           }
         } else {
+          // create account request
           const response = await fetch('http://localhost:5000/users', {
             method: 'POST',
             headers: {
@@ -50,11 +54,13 @@ function LoginPage() {
       }
     }
   
+    // ui
     return (
       <div className="login-container">
         <div className="login-card">
           <h2>{isLogin ? 'Login' : 'Create Account'}</h2>
           <form onSubmit={handleSubmit}>
+            {/* checking if the user is not logged in */}
             {!isLogin && (
               <>
                 <div className="form-group">
@@ -78,6 +84,7 @@ function LoginPage() {
               </>
             )}
             <div className="form-group">
+              {/* email input */}
               <input
                 type="email"
                 placeholder="Email"
@@ -87,6 +94,7 @@ function LoginPage() {
               />
             </div>
             <div className="form-group">
+              {/* password input */}
               <input
                 type="password"
                 placeholder="Password"
@@ -103,7 +111,6 @@ function LoginPage() {
           <div style={{ textAlign: 'center' }}>
             <button
               type="button"
-              className="toggle-button"
               onClick={() => {
                 setIsLogin(!isLogin)
                 setError('')

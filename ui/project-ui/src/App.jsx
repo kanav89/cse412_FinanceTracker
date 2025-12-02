@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import './App.css'
 import LoginPage from '../components/LoginPage'
-import Dashboard from '../components/Dashboard'
+import Dashboard from '../components/dashboard'
 
 
 
