@@ -23,10 +23,10 @@ You will run the backend and frontend separately.
 
 ### **Frontend (UI)**
 
-1. Navigate to the `/ui` directory
+1. Navigate to the `/ui/project-ui` directory
 
    ```
-   cd ui
+   cd ui/project-ui
    ```
 2. Install packages
 
