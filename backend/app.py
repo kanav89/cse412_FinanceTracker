@@ -19,7 +19,7 @@ app.register_blueprint(budget_routes)
 
 @app.route('/')
 def index():
-    return jsonify({"message": "Finance Tracker API", "status": "running"})
+    return jsonify({"message": "Finance Tracker", "status": "running"})
 
 if __name__ == '__main__':
     app.run(debug=True)
