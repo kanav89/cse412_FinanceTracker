@@ -21,8 +21,6 @@ createdb project
 ```
 psql -d project -f schemaswithdata.sql
 ```
-If schemaswithdata.sql fails on very old Postgres with transaction_timeout, delete that line from the file and rerun.
-
 
 **5. Open two terminal windows**
 You will run the backend and frontend separately.
@@ -76,5 +74,5 @@ If npm is not installed, install it from [here](https://nodejs.org/en/download/)
 
 ### **Test Credentials**
 
-* Email: **a@c**
-* Password: **a**
+* Email: **test@test.com**
+* Password: **test**
