@@ -14,7 +14,17 @@ cd cse412_FinanceTracker
 cp .env.example .env
 Fill in the values for the environment variables
 ```
-**4. Open two terminal windows**
+**4. Database**
+```
+createdb project
+```
+```
+psql -d project -f schemaswithdata.sql
+```
+If schemaswithdata.sql fails on very old Postgres with transaction_timeout, delete that line from the file and rerun.
+
+
+**5. Open two terminal windows**
 You will run the backend and frontend separately.
 
 ### **Backend**
