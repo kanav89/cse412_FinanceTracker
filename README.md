@@ -1,6 +1,20 @@
 **Setup Instructions**
 
-**1. Open two terminal windows**
+**1. Clone the repository**
+```
+git clone https://github.com/kanav89/cse412_FinanceTracker.git
+```
+**2. Navigate to the repository directory**
+```
+cd cse412_FinanceTracker
+```
+
+**3. Create a .env file**
+```
+cp .env.example .env
+Fill in the values for the environment variables
+```
+**4. Open two terminal windows**
 You will run the backend and frontend separately.
 
 ### **Backend**
@@ -10,12 +24,22 @@ You will run the backend and frontend separately.
    ```
    cd backend
    ```
-2. Install dependencies
+2. Create a virtual environment
+
+   ```
+   python -m venv venv
+   ```
+3. Activate the virtual environment
+
+   ```
+   source venv/bin/activate
+   ```
+4. Install dependencies
 
    ```
    pip install -r requirements.txt
    ```
-3. Start the server
+5. Start the server
 
    ```
    python app.py
