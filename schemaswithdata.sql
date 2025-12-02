@@ -447,7 +447,7 @@ COPY public.transaction (transaction_id, user_id, account_id, category_id, trans
 --
 
 COPY public.users (user_id, first_name, last_name, email, password, created) FROM stdin;
-1	Santhosh	SRS	santhosh@example.com	$2a$06$wKZmvFr.nix/FKmOc0W8se65OS5DWZO0NGjlySfq99zFzYFCh7XF.	2025-11-08 22:36:29.338724
+1	Santhosh	SRS	test@test.com	test	2025-11-08 22:36:29.338724
 2	Kanav	Gupta	kanav@example.com	$2a$06$1ftLy9MQUHNDZv0S/cclG.C0YF50gBqP7iOpVe1qmTo.0Kh5pOznC	2025-11-08 22:36:29.338724
 3	Vishvas	Singh	vishvas@example.com	$2a$06$ZwhXWoLUCdr5qedP4KZScuQj79zZgqtGVjZMGQq605V8g74Z5wLZa	2025-11-08 22:36:29.338724
 4	Krishna	Balaji	krishna@example.com	$2a$06$fjjQ1uYIKG0uN7MloY39VeNJVx5ecI2ab5CzZ2Z3/n3HUOIfpITWy	2025-11-08 22:36:29.338724

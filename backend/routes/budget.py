@@ -13,9 +13,9 @@ def get_budgets(user_id):
     cursor = conn.cursor()
     
     if month and year:
-        cursor.execute("SELECT * FROM budgets WHERE user_id=%s AND budget_month=%s AND budget_year= %s",(user_id, month, year))
+        cursor.execute("SELECT * FROM budgets WHERE user_id=%s AND budget_month=%s AND budget_year= %s",(user_id,month,year))
     else:
-        cursor.execute("SELECT * FROM budgets WHERE user_id =%s", (user_id,))
+        cursor.execute("SELECT * FROM budgets WHERE user_id =%s",(user_id,))
     b=cursor.fetchall()
     cursor.close()
     conn.close()
