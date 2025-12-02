@@ -25,7 +25,7 @@ def get_transactions(user_id):
     conn.close()
     return jsonify(t)
 
-# creating the origin
+# creating the transaction
 @app.route('/transactions',methods=['POST'])
 def create_transaction():
     data = request.json
@@ -42,14 +42,14 @@ def create_transaction():
     cursor.close()
     conn.close()
     return jsonify(t)
-
+# delting a transaction
 @app.route('/transactions/<transaction_id>', methods=['DELETE'])
 def delete_transaction(transaction_id):
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM transaction WHERE transaction_id =%s",(transaction_id,))
     t = cursor.fetchone()
-    
+    # we need to update the account balance also 
     cursor.execute("UPDATE accounts SET current_balance = current_balance - %s WHERE account_id = %s",(t[5],t[2]))
     cursor.execute("DELETE FROM transaction WHERE transaction_id = %s",(transaction_id,))
     conn.commit()
